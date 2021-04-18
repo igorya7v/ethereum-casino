@@ -1,0 +1,33 @@
+{
+  "name": "ethereum-casino",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igorya7v/ethereum-casino.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igorya7v/ethereum-casino/issues"
+  },
+  "homepage": "https://github.com/igorya7v/ethereum-casino#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.2",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^5.2.2",
+    "json-loader": "^0.5.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "style-loader": "^2.0.0",
+    "web3": "^0.20.0",
+    "webpack": "^5.33.2"
+  }
+}
