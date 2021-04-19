@@ -6,7 +6,7 @@ contract Casino {
 	uint256 public minimumBet;
 	uint256 public totalBet;
 	uint256 public numberOfBets;
-	uint256 public maxAmountOfBets;
+	uint256 public maxAmountOfBets = 10;
 	address[] public players;
 	
 	struct Player {
@@ -48,7 +48,7 @@ contract Casino {
 		}
 	}
 	
-	funciton generateWinnerNumber() public {
+	function generateWinnerNumber() public {
 		// TODO: make it more secure
 		uint256 winnerNumber = block.number % 10 + 1;
 		distributePrizes(winnerNumber);
@@ -64,7 +64,7 @@ contract Casino {
 		return false;
 	}
 	
-	function distributePrizes(uint256 winnerNumber) poublic {
+	function distributePrizes(uint256 winnerNumber) public {
 		// temp in memory array 
 		// it must have a fixed size
 		address[100] memory winners;
@@ -81,16 +81,22 @@ contract Casino {
 			delete playerInfo[playerAddress];
 		}
 		
-		players.length = 0;
-		
 		// TODO: make distribution lelative to the bet amount of the player
 		uint256 winnerEtherAmount = totalBet / winners.length;
 		
-		for (uint256 i = 0; i < winnersCounter; i++) {
+		for (uint256 j = 0; j < winnersCounter; j++) {
 			// double-check that the address is not empty
-			if (winners[i] != address(0)) {
-				winners[i].transfer(winnerEtherAmount);
+			if (winners[j] != address(0)) {
+				winners[j].transfer(winnerEtherAmount);
 			}
 		}
+		
+		resetData();
+	}
+	
+	function resetData() public {
+		players.length = 0;
+		totalBet = 0;
+		numberOfBets = 0;
 	}
 }
