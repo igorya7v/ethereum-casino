@@ -1,8 +1,8 @@
-pragma solidity 0.4.20;
+pragma solidity 0.5.16;
 
 contract Casino {
 	
-	address public owner;
+	address payable public owner;
 	uint256 public minimumBet;
 	uint256 public totalBet;
 	uint256 public numberOfBets;
@@ -17,7 +17,7 @@ contract Casino {
 	// Player's address => user info (Player)
 	mapping(address => Player) public playerInfo;
 	
-	function Casino(uint256 _minimumBet) public {
+	constructor(uint256 _minimumBet) public {
 		owner = msg.sender;
 		if (_minimumBet != 0) {
 			minimumBet = _minimumBet;
@@ -67,11 +67,11 @@ contract Casino {
 	function distributePrizes(uint256 winnerNumber) public {
 		// temp in memory array 
 		// it must have a fixed size
-		address[100] memory winners;
+		address payable[100] memory winners;
 		uint256 winnersCounter = 0;
 		
 		for (uint256 i = 0; i < players.length; i++) {
-			address playerAddress = players[i];
+			address payable playerAddress = address(uint160(players[i]));
 			if (playerInfo[playerAddress].selectedNum == winnerNumber) {
 				winners[winnersCounter] = playerAddress;
 				winnersCounter++;
