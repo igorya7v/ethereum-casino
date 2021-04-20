@@ -2,32 +2,45 @@
   "name": "ethereum-casino",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "body-parser": "^1.19.0",
+    "css-loader": "^5.2.2",
+    "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
+    "fs": "0.0.1-security",
+    "json-loader": "^0.5.7",
+    "react": "^15.7.0",
+    "react-dom": "^15.7.0",
+    "script-loader": "^0.7.2",
+    "style-loader": "^2.0.0",
+    "web3": "^0.20.0",
+    "webpack": "^5.33.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2",
+    "yargs": "^14.2.3"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "dev": "webpack serve --mode development --open",
+    "start": "webpack && node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/igorya7v/ethereum-casino.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Igor Yakubov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/igorya7v/ethereum-casino/issues"
   },
-  "homepage": "https://github.com/igorya7v/ethereum-casino#readme",
-  "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.2.2",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "css-loader": "^5.2.2",
-    "json-loader": "^0.5.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "style-loader": "^2.0.0",
-    "web3": "^0.20.0",
-    "webpack": "^5.33.2"
-  }
+  "homepage": "https://github.com/igorya7v/ethereum-casino#readme"
 }
