@@ -1,14 +1,22 @@
 pragma solidity 0.8.0;
 
 // SPDX-License-Identifier: MIT
-contract Casino {
+
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+/**
+ * NOTE: `SafeMath` is no longer needed starting with Solidity 0.8. The compiler
+ * now has built in overflow checking.
+ */
+
+
+contract Casino is Ownable {
 	
-	address payable public owner;
 	uint256 public minimumBet;
 	uint256 public totalBet;
 	uint256 public numberOfBets;
 	uint256 public maxAmountOfBets = 10;
-	address payable[] public players;
+	address[] public players;
 	
 	struct Player {
 		uint256 amountBet;
@@ -19,30 +27,26 @@ contract Casino {
 	mapping(address => Player) public playerInfo;
 	
 	constructor(uint256 _minimumBet) {
-		owner = payable(msg.sender);
 		if (_minimumBet != 0) {
 			minimumBet = _minimumBet;
 		}
 	}
 	
-	function kill() public {
-		if (msg.sender == owner) {
-			selfdestruct(owner);
-		}
+	function kill() public onlyOwner {
+		selfdestruct(_owner);
 	}
 	
 	// TODO: do we need a fallback function?
 	
 	function bet(uint256 selectedNum) public payable {
-	    address payable senderAddress = payable(msg.sender);
-		require(!checkPlayerExists(senderAddress));
+		require(!checkPlayerExists(msg.sender));
 		require(selectedNum > 0 && selectedNum <= 10);
 		require(msg.value >= minimumBet);
 		
-		playerInfo[senderAddress].amountBet = msg.value;
-		playerInfo[senderAddress].selectedNum = selectedNum;
+		playerInfo[msg.sender].amountBet = msg.value;
+		playerInfo[msg.sender].selectedNum = selectedNum;
 		numberOfBets++;
-		players.push(senderAddress);
+		players.push(msg.sender);
 		totalBet += msg.value;
 		
 		if (numberOfBets >= maxAmountOfBets) {
@@ -70,11 +74,11 @@ contract Casino {
 		// temp in memory array 
 		// it must have a fixed size
 		// TODO: calculate winners size
-		address payable[100] memory winners;
+		address[100] memory winners;
 		uint256 winnersCounter = 0;
 		
 		for (uint256 i = 0; i < players.length; i++) {
-			address payable playerAddress = players[i];
+			address playerAddress = players[i];
 			if (playerInfo[playerAddress].selectedNum == winnerNumber) {
 				winners[winnersCounter] = playerAddress;
 				winnersCounter++;
@@ -90,7 +94,8 @@ contract Casino {
 		for (uint256 j = 0; j < winnersCounter; j++) {
 			// double-check that the address is not empty
 			if (winners[j] != address(0)) {
-				winners[j].transfer(winnerEtherAmount);
+				address payable winnerAddress = payable(winners[j]);
+				winnerAddress.transfer(winnerEtherAmount);
 			}
 		}
 		
