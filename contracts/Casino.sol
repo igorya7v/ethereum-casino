@@ -46,8 +46,6 @@ contract Casino is Ownable {
 		selfdestruct(owner);
 	}
 	
-	// TODO: do we need a fallback function?
-	
 	function bet(uint8 selectedNum) public payable {
 		require(!checkPlayerExists(msg.sender));
 		require(selectedNum > 0 && selectedNum <= 10);
