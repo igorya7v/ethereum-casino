@@ -1,5 +1,6 @@
-pragma solidity 0.5.16;
+pragma solidity 0.8.0;
 
+// SPDX-License-Identifier: MIT
 contract Casino {
 	
 	address payable public owner;
@@ -7,7 +8,7 @@ contract Casino {
 	uint256 public totalBet;
 	uint256 public numberOfBets;
 	uint256 public maxAmountOfBets = 10;
-	address[] public players;
+	address payable[] public players;
 	
 	struct Player {
 		uint256 amountBet;
@@ -17,8 +18,8 @@ contract Casino {
 	// Player's address => user info (Player)
 	mapping(address => Player) public playerInfo;
 	
-	constructor(uint256 _minimumBet) public {
-		owner = msg.sender;
+	constructor(uint256 _minimumBet) {
+		owner = payable(msg.sender);
 		if (_minimumBet != 0) {
 			minimumBet = _minimumBet;
 		}
@@ -33,14 +34,15 @@ contract Casino {
 	// TODO: do we need a fallback function?
 	
 	function bet(uint256 selectedNum) public payable {
-		require(!checkPlayerExists(msg.sender));
+	    address payable senderAddress = payable(msg.sender);
+		require(!checkPlayerExists(senderAddress));
 		require(selectedNum > 0 && selectedNum <= 10);
 		require(msg.value >= minimumBet);
 		
-		playerInfo[msg.sender].amountBet = msg.value;
-		playerInfo[msg.sender].selectedNum = selectedNum;
+		playerInfo[senderAddress].amountBet = msg.value;
+		playerInfo[senderAddress].selectedNum = selectedNum;
 		numberOfBets++;
-		players.push(msg.sender);
+		players.push(senderAddress);
 		totalBet += msg.value;
 		
 		if (numberOfBets >= maxAmountOfBets) {
@@ -67,11 +69,12 @@ contract Casino {
 	function distributePrizes(uint256 winnerNumber) public {
 		// temp in memory array 
 		// it must have a fixed size
+		// TODO: calculate winners size
 		address payable[100] memory winners;
 		uint256 winnersCounter = 0;
 		
 		for (uint256 i = 0; i < players.length; i++) {
-			address payable playerAddress = address(uint160(players[i]));
+			address payable playerAddress = players[i];
 			if (playerInfo[playerAddress].selectedNum == winnerNumber) {
 				winners[winnersCounter] = playerAddress;
 				winnersCounter++;
@@ -95,7 +98,7 @@ contract Casino {
 	}
 	
 	function resetData() public {
-		players.length = 0;
+		delete players;
 		totalBet = 0;
 		numberOfBets = 0;
 	}
