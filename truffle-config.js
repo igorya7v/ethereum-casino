@@ -19,10 +19,14 @@
  */
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const infuraKey = "8713e87bd2a8429c8656c5a5b9a53cea";
+//const infuraKey = "8713e87bd2a8429c8656c5a5b9a53cea";
 //
-const fs = require('fs');
-const mnemonic = fs.readFileSync(".secret").toString().trim();
+//const fs = require('fs');
+//const mnemonic = fs.readFileSync(".secret").toString().trim();
+
+const argv = require('minimist')(process.argv.slice(2), {string: ['mnemonic', 'infura-key']});
+const mnemonic = argv['mnemonic'];
+const infuraKey = argv['infura-key'];
 
 module.exports = {
   /**
@@ -42,11 +46,11 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    development: {
-	  host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
-    },
+    //development: {
+	//  host: "127.0.0.1",     // Localhost (default: none)
+    //  port: 8545,            // Standard Ethereum port (default: none)
+    //  network_id: "*",       // Any network (default: none)
+    //},
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -59,7 +63,7 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
     ropsten: {
-     provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/8713e87bd2a8429c8656c5a5b9a53cea`),
+     provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraKey}`),
      network_id: 3,       // Ropsten's id
      gas: 5500000,        // Ropsten has a lower block limit than mainnet
      confirmations: 2,    // # of confs to wait between deployments. (default: 0)
