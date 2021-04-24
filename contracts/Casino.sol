@@ -10,7 +10,6 @@ import "../node_modules/@openzeppelin/contracts/utils/math/SafeCast.sol";
  * now has built in overflow checking.
  */
 
-
 contract Casino is Ownable {
 	
 	using SafeCast for uint256;
@@ -35,6 +34,21 @@ contract Casino is Ownable {
 	// Player's address => user info (Player)
 	mapping(address => Player) public _playerInfo;
 	
+	
+	event NewBet(
+		address indexed participant, 
+		uint8 indexed selectedNum, 
+		uint256 betAmount
+	);
+	
+	event WinnersDetermined(
+		uint8 indexed winnerNumber, 
+		address[255] winners
+	);
+	
+	event DataReset();
+	
+	
 	constructor(uint256 minimumBet, uint8 maxAmountOfBets) {
 		require(minimumBet > 0);
 		_minimumBet = minimumBet;
@@ -51,6 +65,8 @@ contract Casino is Ownable {
 		require(selectedNum > 0 && selectedNum <= 10);
 		require(msg.value >= _minimumBet);
 		
+		emit NewBet(msg.sender, selectedNum, msg.value);
+		
 		_playerInfo[msg.sender].amountBet = msg.value;
 		_playerInfo[msg.sender].selectedNum = selectedNum;
 		_numberOfBets++;
@@ -65,6 +81,7 @@ contract Casino is Ownable {
 	
 	function generateWinnerNumber() public view returns(uint8) {
 		// TODO: make it more secure
+		// miners can exploit it
 		return (block.number % 10 + 1).toUint8();
 	}
 	
@@ -99,6 +116,8 @@ contract Casino is Ownable {
 		// TODO: make distribution lelative to the bet amount of the player
 		uint256 winnerEtherAmount = _totalBet / winners.length;
 		
+		emit WinnersDetermined(winnerNumber, winners);
+		
 		for (uint256 j = 0; j < winnersCounter; j++) {
 			// double-check that the address is not empty
 			if (winners[j] != address(0)) {
@@ -111,6 +130,7 @@ contract Casino is Ownable {
 	}
 	
 	function resetData() public {
+		emit DataReset();
 		delete _players;
 		_totalBet = 0;
 		_numberOfBets = 0;
