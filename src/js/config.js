@@ -1,88 +1,142 @@
-export const CONTRACT_ADDRESS = '0xDeC6c98fb6Ab74872cd05f0Ecdf45730a37e9527'
+export const CONTRACT_ADDRESS = '0x6bE4fB10E4f7dDA882334aB5f0eFbFF335fCea76'
 
 export const ABI = [
    {
       "inputs":[
          {
             "internalType":"uint256",
-            "name":"_minimumBet",
+            "name":"minimumBet",
             "type":"uint256"
+         },
+         {
+            "internalType":"uint8",
+            "name":"maxAmountOfBets",
+            "type":"uint8"
          }
       ],
-      "payable":false,
       "stateMutability":"nonpayable",
       "type":"constructor"
    },
    {
-      "constant":true,
+      "anonymous":false,
       "inputs":[
          
       ],
-      "name":"maxAmountOfBets",
-      "outputs":[
+      "name":"DataReset",
+      "type":"event"
+   },
+   {
+      "anonymous":false,
+      "inputs":[
          {
+            "indexed":true,
+            "internalType":"address",
+            "name":"participant",
+            "type":"address"
+         },
+         {
+            "indexed":true,
+            "internalType":"uint8",
+            "name":"selectedNum",
+            "type":"uint8"
+         },
+         {
+            "indexed":false,
             "internalType":"uint256",
-            "name":"",
+            "name":"betAmount",
             "type":"uint256"
          }
       ],
-      "payable":false,
-      "stateMutability":"view",
-      "type":"function"
+      "name":"NewBet",
+      "type":"event"
    },
    {
-      "constant":true,
+      "anonymous":false,
       "inputs":[
-         
-      ],
-      "name":"minimumBet",
-      "outputs":[
          {
-            "internalType":"uint256",
-            "name":"",
-            "type":"uint256"
-         }
-      ],
-      "payable":false,
-      "stateMutability":"view",
-      "type":"function"
-   },
-   {
-      "constant":true,
-      "inputs":[
-         
-      ],
-      "name":"numberOfBets",
-      "outputs":[
+            "indexed":true,
+            "internalType":"address",
+            "name":"previousOwner",
+            "type":"address"
+         },
          {
-            "internalType":"uint256",
-            "name":"",
-            "type":"uint256"
-         }
-      ],
-      "payable":false,
-      "stateMutability":"view",
-      "type":"function"
-   },
-   {
-      "constant":true,
-      "inputs":[
-         
-      ],
-      "name":"owner",
-      "outputs":[
-         {
-            "internalType":"address payable",
-            "name":"",
+            "indexed":true,
+            "internalType":"address",
+            "name":"newOwner",
             "type":"address"
          }
       ],
-      "payable":false,
-      "stateMutability":"view",
-      "type":"function"
+      "name":"OwnershipTransferred",
+      "type":"event"
    },
    {
-      "constant":true,
+      "anonymous":false,
+      "inputs":[
+         {
+            "indexed":true,
+            "internalType":"uint8",
+            "name":"winnerNumber",
+            "type":"uint8"
+         },
+         {
+            "indexed":false,
+            "internalType":"address[255]",
+            "name":"winners",
+            "type":"address[255]"
+         }
+      ],
+      "name":"WinnersDetermined",
+      "type":"event"
+   },
+   {
+      "inputs":[
+         
+      ],
+      "name":"_maxAmountOfBets",
+      "outputs":[
+         {
+            "internalType":"uint8",
+            "name":"",
+            "type":"uint8"
+         }
+      ],
+      "stateMutability":"view",
+      "type":"function",
+      "constant":true
+   },
+   {
+      "inputs":[
+         
+      ],
+      "name":"_minimumBet",
+      "outputs":[
+         {
+            "internalType":"uint256",
+            "name":"",
+            "type":"uint256"
+         }
+      ],
+      "stateMutability":"view",
+      "type":"function",
+      "constant":true
+   },
+   {
+      "inputs":[
+         
+      ],
+      "name":"_numberOfBets",
+      "outputs":[
+         {
+            "internalType":"uint8",
+            "name":"",
+            "type":"uint8"
+         }
+      ],
+      "stateMutability":"view",
+      "type":"function",
+      "constant":true
+   },
+   {
       "inputs":[
          {
             "internalType":"address",
@@ -90,7 +144,7 @@ export const ABI = [
             "type":"address"
          }
       ],
-      "name":"playerInfo",
+      "name":"_playerInfo",
       "outputs":[
          {
             "internalType":"uint256",
@@ -98,17 +152,16 @@ export const ABI = [
             "type":"uint256"
          },
          {
-            "internalType":"uint256",
+            "internalType":"uint8",
             "name":"selectedNum",
-            "type":"uint256"
+            "type":"uint8"
          }
       ],
-      "payable":false,
       "stateMutability":"view",
-      "type":"function"
+      "type":"function",
+      "constant":true
    },
    {
-      "constant":true,
       "inputs":[
          {
             "internalType":"uint256",
@@ -116,7 +169,7 @@ export const ABI = [
             "type":"uint256"
          }
       ],
-      "name":"players",
+      "name":"_players",
       "outputs":[
          {
             "internalType":"address",
@@ -124,16 +177,15 @@ export const ABI = [
             "type":"address"
          }
       ],
-      "payable":false,
       "stateMutability":"view",
-      "type":"function"
+      "type":"function",
+      "constant":true
    },
    {
-      "constant":true,
       "inputs":[
          
       ],
-      "name":"totalBet",
+      "name":"_totalBet",
       "outputs":[
          {
             "internalType":"uint256",
@@ -141,12 +193,53 @@ export const ABI = [
             "type":"uint256"
          }
       ],
-      "payable":false,
       "stateMutability":"view",
+      "type":"function",
+      "constant":true
+   },
+   {
+      "inputs":[
+         
+      ],
+      "name":"owner",
+      "outputs":[
+         {
+            "internalType":"address",
+            "name":"",
+            "type":"address"
+         }
+      ],
+      "stateMutability":"view",
+      "type":"function",
+      "constant":true
+   },
+   {
+      "inputs":[
+         
+      ],
+      "name":"renounceOwnership",
+      "outputs":[
+         
+      ],
+      "stateMutability":"nonpayable",
       "type":"function"
    },
    {
-      "constant":false,
+      "inputs":[
+         {
+            "internalType":"address",
+            "name":"newOwner",
+            "type":"address"
+         }
+      ],
+      "name":"transferOwnership",
+      "outputs":[
+         
+      ],
+      "stateMutability":"nonpayable",
+      "type":"function"
+   },
+   {
       "inputs":[
          
       ],
@@ -154,42 +247,42 @@ export const ABI = [
       "outputs":[
          
       ],
-      "payable":false,
       "stateMutability":"nonpayable",
       "type":"function"
    },
    {
-      "constant":false,
       "inputs":[
          {
-            "internalType":"uint256",
+            "internalType":"uint8",
             "name":"selectedNum",
-            "type":"uint256"
+            "type":"uint8"
          }
       ],
       "name":"bet",
       "outputs":[
          
       ],
-      "payable":true,
       "stateMutability":"payable",
-      "type":"function"
+      "type":"function",
+      "payable":true
    },
    {
-      "constant":false,
       "inputs":[
          
       ],
       "name":"generateWinnerNumber",
       "outputs":[
-         
+         {
+            "internalType":"uint8",
+            "name":"",
+            "type":"uint8"
+         }
       ],
-      "payable":false,
-      "stateMutability":"nonpayable",
-      "type":"function"
+      "stateMutability":"view",
+      "type":"function",
+      "constant":true
    },
    {
-      "constant":true,
       "inputs":[
          {
             "internalType":"address",
@@ -205,29 +298,26 @@ export const ABI = [
             "type":"bool"
          }
       ],
-      "payable":false,
       "stateMutability":"view",
-      "type":"function"
+      "type":"function",
+      "constant":true
    },
    {
-      "constant":false,
       "inputs":[
          {
-            "internalType":"uint256",
+            "internalType":"uint8",
             "name":"winnerNumber",
-            "type":"uint256"
+            "type":"uint8"
          }
       ],
       "name":"distributePrizes",
       "outputs":[
          
       ],
-      "payable":false,
       "stateMutability":"nonpayable",
       "type":"function"
    },
    {
-      "constant":false,
       "inputs":[
          
       ],
@@ -235,7 +325,6 @@ export const ABI = [
       "outputs":[
          
       ],
-      "payable":false,
       "stateMutability":"nonpayable",
       "type":"function"
    }
