@@ -6,6 +6,12 @@
   "directories": {
     "test": "test"
   },
+  "scripts": {
+    "test": "mocha",
+    "dev": "webpack serve --mode development --open",
+    "start": "webpack && node server.js",
+    "compile": "truffle compile"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^4.0.0",
     "@truffle/hdwallet-provider": "^1.2.3",
@@ -30,11 +36,6 @@
     "yargs": "^14.2.3"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "mocha",
-    "dev": "webpack serve --mode development --open",
-    "start": "webpack && node server.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/igorya7v/ethereum-casino.git"
