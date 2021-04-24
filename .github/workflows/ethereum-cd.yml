@@ -24,6 +24,7 @@ jobs:
     
     # TODO: use cache for dependencies
     - name: Install dependencies
+      working-directory: ./
       run: npm install
     
     - name: Compile Smart Contracts
