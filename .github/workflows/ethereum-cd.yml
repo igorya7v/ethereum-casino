@@ -27,11 +27,11 @@ jobs:
       working-directory: ./
       run: npm install
     
-    - name: Compile Smart Contracts
-      run: truffle compile
+    #- name: Compile Smart Contracts
+    #  run: truffle compile
       
-    - name: Run Unit Tests
-      run: truffle test
+    #- name: Run Unit Tests
+    #  run: truffle test
       
-    - name: Deploy to Testnet
-      run: truffle deploy --network ropsten
+    #- name: Deploy to Testnet
+    #  run: truffle deploy --network ropsten
