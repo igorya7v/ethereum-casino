@@ -25,13 +25,13 @@ jobs:
     # TODO: use cache for dependencies
     - name: Install dependencies
       working-directory: ./
-      run: npm ci
+      run: npm install
     
-    - name: Install Truffle
-      run: npm install truffle
+    #- name: Install Truffle
+    #  run: npm install truffle
     
     - name: Compile Smart Contracts
-      run: truffle compile
+      run: npm run compile
       
     - name: Run Unit Tests
       run: truffle test
