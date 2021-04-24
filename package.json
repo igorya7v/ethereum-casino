@@ -7,10 +7,11 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "truffle test",
     "dev": "webpack serve --mode development --open",
     "start": "webpack && node server.js",
-    "compile": "truffle compile"
+    "compile": "truffle compile",
+	"deploy": truffle deploy --network ropsten --mnemonic \"{{ secrets.MNEMONIC }}\" --infura-key \"{{ secrets.INFURA_KEY }}\""
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.0.0",
