@@ -57,28 +57,28 @@ class App extends React.Component {
    }
 
    updateState(){
-      this.state.ContractInstance.minimumBet((err, result) => {
+      this.state.ContractInstance._minimumBet((err, result) => {
          if(result != null){
             this.setState({
                minimumBet: parseFloat(this.web3.fromWei(result, 'ether'))
             })
          }
       })
-      this.state.ContractInstance.totalBet((err, result) => {
+      this.state.ContractInstance._totalBet((err, result) => {
          if(result != null){
             this.setState({
                totalBet: parseFloat(this.web3.fromWei(result, 'ether'))
             })
          }
       })
-      this.state.ContractInstance.numberOfBets((err, result) => {
+      this.state.ContractInstance._numberOfBets((err, result) => {
          if(result != null){
             this.setState({
                numberOfBets: parseInt(result)
             })
          }
       })
-      this.state.ContractInstance.maxAmountOfBets((err, result) => {
+      this.state.ContractInstance._maxAmountOfBets((err, result) => {
          if(result != null){
             this.setState({
                maxAmountOfBets: parseInt(result)
