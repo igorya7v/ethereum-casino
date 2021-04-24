@@ -34,7 +34,7 @@ jobs:
       run: npm run compile
       
     - name: Run Unit Tests
-      run: truffle test
+      run: npm run compile
       
     - name: Deploy to Testnet
-      run: truffle deploy --network ropsten
+      run: npm run deploy
