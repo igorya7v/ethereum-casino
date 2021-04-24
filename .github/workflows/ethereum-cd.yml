@@ -27,6 +27,9 @@ jobs:
       working-directory: ./
       run: npm ci
     
+    - name: Install Truffle
+      run: npm install truffle
+    
     - name: Compile Smart Contracts
       run: truffle compile
       
