@@ -13,7 +13,10 @@ on:
 jobs:
   deploy:
   
-    runs-on: igorya5v/simple-spring-boot
+    #runs-on: igorya5v/simple-spring-boot
+    runs:
+      using: 'docker'
+      image: 'igorya5v/simple-spring-boot'
     
     steps:
     - name: Checkout
