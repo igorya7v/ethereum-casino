@@ -1,0 +1,40 @@
+# This workflow will Setup Node.js environment, 
+# install node dependencies, 
+# compile the Ethereum Smart Contracts source code,
+# run the unit tests,
+# and do a deployment to Ethereum Testnet. 
+
+name: Ethereum Contract CD
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup Node.js environemt
+      uses: actions/setup-node@v2
+    
+    # TODO: use cache for dependencies
+    - name: Install dependencies
+      working-directory: ./
+      run: npm ci
+    
+    - name: Install Truffle
+      run: npm install truffle
+    
+    - name: Compile Smart Contracts
+      run: truffle compile
+      
+    - name: Run Unit Tests
+      run: truffle test
+      
+    - name: Deploy to Testnet
+      run: truffle deploy --network ropsten
