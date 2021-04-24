@@ -13,7 +13,7 @@ on:
 jobs:
   deploy:
   
-    runs-on: ubuntu-latest
+    runs-on: igorya5v/simple-spring-boot
     
     steps:
     - name: Checkout
