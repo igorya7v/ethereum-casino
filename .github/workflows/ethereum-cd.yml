@@ -12,13 +12,12 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Testnet
-
+  
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
     
     - name: Setup Node.js environemt
       uses: actions/setup-node@v2
