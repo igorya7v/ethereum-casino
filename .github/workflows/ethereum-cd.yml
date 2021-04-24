@@ -37,4 +37,7 @@ jobs:
       run: npm run compile
       
     - name: Deploy to Testnet
+      env:
+        MNEMONIC: ${{ secrets.MNEMONIC }}
+        INFURA_KEY: ${{ secrets.INFURA_KEY }}
       run: npm run deploy
