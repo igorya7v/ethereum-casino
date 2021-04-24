@@ -11,7 +11,7 @@
     "dev": "webpack serve --mode development --open",
     "start": "webpack && node server.js",
     "compile": "truffle compile",
-    "deploy": "truffle deploy --network ropsten --mnemonic \"%MNEMONIC%\" --infura-key \"%INFURA_KEY%\""
+    "deploy": "truffle deploy --network ropsten --mnemonic \"real chicken differ half region glide hill arctic toward journey rocket plug\" --infura-key \"8713e87bd2a8429c8656c5a5b9a53cea\""
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.0.0",
