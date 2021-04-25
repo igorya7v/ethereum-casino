@@ -4,7 +4,7 @@
 # run the unit tests,
 # and do a deployment to Ethereum Testnet. 
 
-name: Ethereum Contract CD
+name: Ethereum Contract Pipeline
 
 on:
   release:
