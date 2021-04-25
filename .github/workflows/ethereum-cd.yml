@@ -19,6 +19,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       
+    - name: Setup Node.js environemt
+      uses: actions/setup-node@v2
+      
     - name: Cache node modules
       uses: actions/cache@v2
       env:
@@ -31,9 +34,6 @@ jobs:
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
           ${{ runner.os }}-  
-    
-    - name: Setup Node.js environemt
-      uses: actions/setup-node@v2
     
     # TODO: use cache for dependencies
     - name: Install dependencies
