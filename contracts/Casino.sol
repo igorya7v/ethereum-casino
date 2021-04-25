@@ -35,7 +35,7 @@ contract Casino is Ownable {
 	}
 	
 	// Player's address => user info (Player)
-	mapping(address => Player) public _playerInfo;
+	mapping(address => Player) _playerInfo;
 	
 	// --- Events Declaration ---
 	
@@ -72,6 +72,10 @@ contract Casino is Ownable {
 	function kill() public onlyOwner {
 		address payable owner = payable(owner());
 		selfdestruct(owner);
+	}
+	
+	function getPlayerInfo(address playerAddress) public view returns(uint256, uint8) {
+		return (_playerInfo[playerAddress].amountBet, _playerInfo[playerAddress].selectedNum);
 	}
 	
 	/* 
