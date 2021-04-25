@@ -47,7 +47,7 @@ jobs:
       run: npm run compile
       
     - name: Run Unit Tests
-      run: npm run compile
+      run: npm run test
       
     - name: Deploy to Testnet
       env:
