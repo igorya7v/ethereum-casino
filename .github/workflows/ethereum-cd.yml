@@ -14,7 +14,6 @@ jobs:
   deploy:
   
     runs-on: ubuntu-latest
-    container: igorya5v/simple-spring-boot
     
     steps:
     - name: Checkout
