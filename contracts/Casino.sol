@@ -1,6 +1,5 @@
-pragma solidity 0.8.0;
-
 // SPDX-License-Identifier: MIT
+pragma solidity 0.8.0;
 
 import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 import "../node_modules/@openzeppelin/contracts/utils/math/SafeCast.sol";
@@ -10,6 +9,10 @@ import "../node_modules/@openzeppelin/contracts/utils/math/SafeCast.sol";
  * now has built in overflow checking.
  */
 
+/*
+* @author Igor Yakubov
+* @title Casino Contract - Full Stack DApp (Demo) 
+*/
 contract Casino is Ownable {
 	
 	using SafeCast for uint256;
@@ -34,6 +37,7 @@ contract Casino is Ownable {
 	// Player's address => user info (Player)
 	mapping(address => Player) public _playerInfo;
 	
+	// --- Events Declaration ---
 	
 	event NewBet(
 		address indexed participant, 
@@ -48,18 +52,34 @@ contract Casino is Ownable {
 	
 	event DataReset();
 	
+	// --- end: Events Declaration ---
 	
+	/*
+	* @dev Create a new Casino Contract instance
+	* @param minimumBet A minimum allowed bet amount in Wei units.
+	* @param maxAmountOfBets A maximum number of bets before 
+	* the winners are selected and prizes distributed.
+	*/
 	constructor(uint256 minimumBet, uint8 maxAmountOfBets) {
 		require(minimumBet > 0);
 		_minimumBet = minimumBet;
 		_maxAmountOfBets = maxAmountOfBets;
 	}
 	
+	/*
+	* Destroy the contract instance.
+	*/
 	function kill() public onlyOwner {
 		address payable owner = payable(owner());
 		selfdestruct(owner);
 	}
 	
+	/* 
+	* Accept the bet from the player.
+	* @param selectedNum The number that the player want to bet on.
+	* A number should be [0 < x <= 10]
+	* and a Player can bet only once in each round.
+	*/
 	function bet(uint8 selectedNum) public payable {
 		require(!checkPlayerExists(msg.sender));
 		require(selectedNum > 0 && selectedNum <= 10);
@@ -79,12 +99,19 @@ contract Casino is Ownable {
 		}
 	}
 	
+	/*
+	* Generate a winner number.
+	*/
 	function generateWinnerNumber() public view returns(uint8) {
 		// TODO: make it more secure
 		// miners can exploit it
 		return (block.number % 10 + 1).toUint8();
 	}
 	
+	/*
+	* Check if player already made a bet.
+	* @param player Ethereum address of the player.
+	*/
 	function checkPlayerExists(address player) public view returns(bool) {
 		// TODO: use map 
 		for (uint8 i = 0; i < _players.length; i++) {
@@ -96,6 +123,10 @@ contract Casino is Ownable {
 		return false;
 	}
 	
+	/*
+	* Distribute prizes to the winners.
+	* @param A winner number.
+	*/
 	function distributePrizes(uint8 winnerNumber) public {
 		// temp in memory array 
 		// it must have a fixed size
@@ -129,6 +160,9 @@ contract Casino is Ownable {
 		resetData();
 	}
 	
+	/*
+	* Reset the round data.
+	*/
 	function resetData() public {
 		emit DataReset();
 		delete _players;
