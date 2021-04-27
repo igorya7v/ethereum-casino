@@ -1,0 +1,23 @@
+Casino address on Ropstain 
+0xDeC6c98fb6Ab74872cd05f0Ecdf45730a37e9527
+0x6bE4fB10E4f7dDA882334aB5f0eFbFF335fCea76
+
+owner: 0x3DfB22CF64763f8579eF89b54fb25c7d62aeE05e
+
+
+1 000 000 000 000 000
+
+
+npm install -g ganache-cli
+
+truffle deploy --network ropsten
+truffle console --network ropsten
+instance = new web3.eth.Contract(Casino.abi, "0x6bE4fB10E4f7dDA882334aB5f0eFbFF335fCea76")
+instance.methods
+instance.methods._maxAmountOfBets().call()
+
+
+truffle deploy --reset --network ropsten --mnemonic "real chicken differ half region glide hill arctic toward journey rocket plug" --infura-key "8713e87bd2a8429c8656c5a5b9a53cea"
+
+
+./node_modules/.bin/truffle v
