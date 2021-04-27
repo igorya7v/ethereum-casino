@@ -1,0 +1,31 @@
+{
+  "name": "ethereum-casino-backend",
+  "version": "1.0.0",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test",
+    "compile": "truffle compile",
+    "deploy": "truffle deploy --network ropsten --mnemonic \"$MNEMONIC\" --infura-key \"$INFURA_KEY\""
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.0.0",
+    "@truffle/hdwallet-provider": "1.2.3",
+    "fs": "0.0.1-security",
+    "json-loader": "^0.5.7",
+    "minimist": "^1.2.5",
+    "web3": "^0.20.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igorya7v/ethereum-casino.git"
+  },
+  "author": "Igor Yakubov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igorya7v/ethereum-casino/issues"
+  },
+  "homepage": "https://github.com/igorya7v/ethereum-casino#readme"
+}
