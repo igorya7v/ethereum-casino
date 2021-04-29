@@ -43,7 +43,7 @@ jobs:
       uses: actions/setup-node@v2.1.5
       
     - name: Install Dependincies
-      run: npm isntall babel-loader
+      run: npm isntall babel-loader @babel/core
       
     - name: Build the React Dapp
       working-directory: ./frontend
