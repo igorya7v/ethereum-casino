@@ -6,9 +6,9 @@
 
 name: Ethereum Contract Pipeline
 
-on:
-  release:
-    types: [created]
+#on:
+#  release:
+#    types: [created]
 
 jobs:
   deploy:
