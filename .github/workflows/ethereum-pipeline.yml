@@ -41,18 +41,20 @@ jobs:
     # TODO: use cache for dependencies
     - name: Install dependencies
       working-directory: ./backend
-      run: npm install
-    
-    - name: Install Truffle
-      run: npm install truffle
+      run: |
+        npm install
+        npm install truffle
     
     - name: Compile Smart Contracts
+      working-directory: ./backend
       run: npm run compile
       
     - name: Run Unit Tests
+      working-directory: ./backend
       run: npm run test
       
     - name: Deploy to Testnet
+      working-directory: ./backend
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
         INFURA_KEY: ${{ secrets.INFURA_KEY }}
