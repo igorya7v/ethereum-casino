@@ -60,6 +60,13 @@ jobs:
         INFURA_KEY: ${{ secrets.INFURA_KEY }}
       run: npm run deploy
       
+    - name: Upload smart contract artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: smart-contract-artifact
+        path: ./backend/build/contracts/Casino.json
+      
+      
   # Deploy React Dapp to Amazon ECS    
   deploy_react_dapp:
     name: Deploy React Dapp
@@ -72,6 +79,11 @@ jobs:
       
     - name: Setup Node.js environment
       uses: actions/setup-node@v2.1.5
+    
+    - name: Download Smart Contract Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: smart-contract-artifact
       
     - name: Inject React/Dapp Config
       run: python inject-script.py
