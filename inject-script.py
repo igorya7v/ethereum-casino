@@ -6,7 +6,7 @@
 
 import json
 
-CONTRACT_JSON_FILE = './backend/build/contracts/Casino.json'
+CONTRACT_JSON_FILE = './Casino.json'
 JAVASCRIPT_CONFIG_FILE = './frontend/src/js/config.js'
 
 
