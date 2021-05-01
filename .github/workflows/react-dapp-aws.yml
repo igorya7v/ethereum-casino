@@ -43,7 +43,7 @@ jobs:
     - name: Read from json file
       id: set_var
       run: |
-        content=`cat ./.github/workflows/frontend/Casino.json`
+        content=`cat ./backend/Casino.json`
         # the following lines are only required for multi line json
         content="${content//'%'/'%25'}"
         content="${content//$'\n'/'%0A'}"
@@ -52,4 +52,10 @@ jobs:
         echo "::set-output name=packageJson::$content"
     
     - run: |
-        echo "${{fromJson(steps.set_var.outputs.packageJson).version}}"
+        echo "${{fromJson(steps.set_var.outputs.packageJson).networks}}"
+        address="`jq '.networks."3".address' ./backend/Casino.json`"
+        abi="`jq '.abi' ./backend/Casino.json`"
+        echo $address
+        sed -i 's/<%address_placeholder%>/$address/g' ./frontend/src/js/config.js
+        sed -i 's/<%abi_placeholder%>/$abi/g' ./frontend/src/js/config.js
+        
