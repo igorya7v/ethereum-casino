@@ -11,7 +11,7 @@ JAVASCRIPT_CONFIG_FILE = './frontend/src/js/config.js'
 
 
 print("Reading contract address and ABI from: {}" .format(CONTRACT_JSON_FILE))
-with open('./backend/build/contracts/Casino.json') as json_file:
+with open(CONTRACT_JSON_FILE) as json_file:
     data = json.load(json_file)
 
 print("Contract address: {}" .format(data['networks']['3']['address']))
@@ -19,13 +19,13 @@ print("Contract ABI: {}" .format(data['abi']))
 print("---")
 
 print("Injecting the config data into: {}" .format(JAVASCRIPT_CONFIG_FILE))
-with open('./frontend/src/js/config.js', 'r+') as f:
+with open(JAVASCRIPT_CONFIG_FILE, 'r+') as f:
     config = f.read()
 
 config = config.replace('<%address_placeholder%>', json.dumps(data['networks']['3']['address']))
 config = config.replace('<%abi_placeholder%>', json.dumps(data['abi']))
     
-with open('./frontend/src/js/config.js', "w") as f:
+with open(JAVASCRIPT_CONFIG_FILE, "w") as f:
     f.write(config)
     
 print("Done")
