@@ -35,7 +35,6 @@ jobs:
         sed -i 's,<%address_placeholder%>,'"$address"',g' ./frontend/src/js/config.js
         sed ':a;N;$!ba;s/\n/ /g' abi_file
         abi='cat abi_file'
-        echo $abi
-#        sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
-#        cat ./frontend/src/js/config.js
+        sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
+        cat ./frontend/src/js/config.js
         
