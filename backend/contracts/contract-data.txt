@@ -21,3 +21,33 @@ truffle deploy --reset --network ropsten --mnemonic "real chicken differ half re
 
 
 ./node_modules/.bin/truffle v
+
+
+
+
+(already setup)
+aws ecs register-task-definition --region us-east-1 --cli-input-json file://frontend/ecs-task-definition.json
+
+aws ecs create-cluster --region us-east-1 --cluster-name eth-dapp-fargate
+
+(already setup)
+aws ec2 create-security-group --group-name et-dapp-sg --description "Group for Ethereum Dapp ECS Cluster"
+
+(already setup)
+aws ec2 authorize-security-group-ingress --group-id sg-0dafe9b41b28f1bf5 --protocol tcp --port 80 --cidr 0.0.0.0/0
+
+aws ecs create-service --region us-east-1 --service-name eth-dapp-service --task-definition EthereumDappTask --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-a06c17ed], securityGroups=[sg-0dafe9b41b28f1bf5],assignPublicIp=ENABLED}" --cluster eth-dapp-fargate
+
+
+0xe2fc53Ab95EbEd01df69ad19AE9f1A96b8AE5e2C
+
+
+aws ecs list-tasks  --cluster eth-dapp-fargate
+
+aws ecs describe-tasks --task "arn:aws:ecs:us-east-1:665524042598:task/eth-dapp-fargate/0399a1b3b950437fb23eaf23d790c496" --cluster eth-dapp-fargate
+{
+    "name": "networkInterfaceId",
+    "value": "eni-0078f4c2156c63883"
+}
+
+aws ec2 describe-network-interfaces --network-interface-ids eni-0078f4c2156c63883
