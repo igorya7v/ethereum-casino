@@ -50,7 +50,6 @@ jobs:
         content="${content//$'\r'/'%0D'}"
         # end of optional handling for multi line json
         echo "::set-output name=packageJson::$content"
-        echo ${{fromJson(${{content}}).contractName}}
     
     - run: |
-        echo "${{fromJson(steps.set_var.outputs.packageJson)}}"
+        echo "${{fromJson(steps.set_var.outputs.packageJson).contractName}}"
