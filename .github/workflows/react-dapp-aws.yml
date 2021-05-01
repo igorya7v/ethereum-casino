@@ -16,5 +16,8 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Inject React/Dapp Config
-      run: python inject-script.py
+      run: | 
+        python inject-script.py
+        cat ./frontend/src/js/config.js
+      
         
