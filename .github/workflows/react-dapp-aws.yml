@@ -31,9 +31,10 @@ jobs:
         address="`jq '.networks."3".address' ./backend/Casino.json`"
         abi="`jq '.abi' ./backend/Casino.json`"
         echo $address
+        echo $abi
         abi="echo '$abi' | tr -d ' \t\n\r'"
         echo abi
-#        echo $abi
+        echo $abi
 #        sed -i 's,<%address_placeholder%>,'"$address"',g' ./frontend/src/js/config.js
 #        sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
 #        cat ./frontend/src/js/config.js
