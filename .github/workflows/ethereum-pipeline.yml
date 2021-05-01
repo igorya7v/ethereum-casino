@@ -4,15 +4,18 @@
 # run the unit tests,
 # and do a deployment to Ethereum Testnet. 
 
-name: Ethereum Contract Pipeline
+name: Ethereum Contract and Dapp Deployment Pipeline
 
+on:
+  workflow_dispatch
 #on:
 #  release:
 #    types: [created]
 
 jobs:
-  deploy:
-  
+  # Compile, Test, Delploy Ethereum Smart Contract
+  deploy_smart_contract:
+    name: Compile, Test and Delploy Ethereum Smart Contract to Testnet
     runs-on: ubuntu-latest
     
     steps:
@@ -54,3 +57,70 @@ jobs:
         MNEMONIC: ${{ secrets.MNEMONIC }}
         INFURA_KEY: ${{ secrets.INFURA_KEY }}
       run: npm run deploy
+      
+  # Deploy React Dapp to Amazon ECS    
+  deploy_react_dapp:
+    name: Deploy React Dapp
+    needs: deploy_smart_contract
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2.1.5
+      
+    - name: Inject React/Dapp Config
+      run: python inject-script.py
+      
+    - name: Build the React Dapp
+      working-directory: ./frontend
+      run: |
+        npm ci
+        npm run build
+        
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      working-directory: ./frontend
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: igorya5v/react-dapp
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ./frontend/ecs-task-definition.json
+        container-name: ethereum-dapp
+        image: ${{ steps.build-image.outputs.image }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: dapp-service
+        cluster: fargate
+        wait-for-service-stability: true
+      
+    
+    
