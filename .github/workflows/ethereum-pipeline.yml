@@ -41,22 +41,31 @@ jobs:
     # TODO: use cache for dependencies
     - name: Install dependencies
       working-directory: ./backend
-      run: npm install
-    
-    - name: Install Truffle
-      run: npm install truffle
+      run: |
+        npm install
+        npm install truffle
     
     - name: Compile Smart Contracts
+      working-directory: ./backend
       run: npm run compile
       
     - name: Run Unit Tests
+      working-directory: ./backend
       run: npm run test
       
     - name: Deploy to Testnet
+      working-directory: ./backend
       env:
         MNEMONIC: ${{ secrets.MNEMONIC }}
         INFURA_KEY: ${{ secrets.INFURA_KEY }}
       run: npm run deploy
+      
+    - name: Upload smart contract artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: smart-contract-artifact
+        path: ./backend/build/contracts/Casino.json
+      
       
   # Deploy React Dapp to Amazon ECS    
   deploy_react_dapp:
@@ -70,6 +79,11 @@ jobs:
       
     - name: Setup Node.js environment
       uses: actions/setup-node@v2.1.5
+    
+    - name: Download Smart Contract Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: smart-contract-artifact
       
     - name: Inject React/Dapp Config
       run: python inject-script.py
@@ -118,8 +132,8 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: dapp-service
-        cluster: fargate
+        service: eth-dapp-service
+        cluster: eth-dapp-fargate
         wait-for-service-stability: true
       
     
