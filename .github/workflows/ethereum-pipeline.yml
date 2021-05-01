@@ -120,8 +120,8 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: dapp-service
-        cluster: fargate
+        service: eth-dapp-service
+        cluster: eth-dapp-fargate
         wait-for-service-stability: true
       
     
