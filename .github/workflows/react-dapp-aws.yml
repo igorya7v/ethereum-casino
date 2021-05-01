@@ -33,6 +33,6 @@ jobs:
         echo $address
         echo $abi
         sed -i 's,<%address_placeholder%>,'"$address"',g' ./frontend/src/js/config.js
-#        sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
+        sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
 #        cat ./frontend/src/js/config.js
         
