@@ -15,24 +15,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       
-    - name: Read from json file
-      id: set_var
-      run: |
-        content=`cat ./backend/Casino.json`
-        # the following lines are only required for multi line json
-        content="${content//'%'/'%25'}"
-        content="${content//$'\n'/'%0A'}"
-        content="${content//$'\r'/'%0D'}"
-        # end of optional handling for multi line json
-        echo "::set-output name=packageJson::$content"
-    
-    - run: |
-        address="`jq '.networks."3".address' ./backend/Casino.json`"
-        abi="`jq '.abi' ./backend/Casino.json`"
-        echo $address
-        echo $abi
-        sed -i 's,<%address_placeholder%>,'"$address"',g' ./frontend/src/js/config.js
-        python --version
-#        sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
-#        cat ./frontend/src/js/config.js
+    - name: Inject React/Dapp Config
+      run: python inject-script.py
         
