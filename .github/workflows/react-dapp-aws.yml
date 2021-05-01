@@ -53,4 +53,4 @@ jobs:
     
     - run: |
         echo "${{fromJson(steps.set_var.outputs.packageJson).networks}}"
-        echo "`jq '.networks.3' ./backend/Casino.json`"
+        echo "`jq -r '.networks.3' ./backend/Casino.json`"
