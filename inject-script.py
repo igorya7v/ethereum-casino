@@ -6,7 +6,8 @@
 
 import json
 
-CONTRACT_JSON_FILE = './Casino.json'
+CONTRACT_JSON_FILE = './backend/build/contracts/Casino.json'
+JAVASCRIPT_CONFIG_TEMPLATE_FILE = './frontend/src/js/config-template.js'
 JAVASCRIPT_CONFIG_FILE = './frontend/src/js/config.js'
 
 
@@ -18,13 +19,14 @@ print("Contract address: {}" .format(data['networks']['3']['address']))
 print("Contract ABI: {}" .format(data['abi']))
 print("---")
 
-print("Injecting the config data into: {}" .format(JAVASCRIPT_CONFIG_FILE))
-with open(JAVASCRIPT_CONFIG_FILE, 'r+') as f:
+print("Injecting the config data into: {}" .format(JAVASCRIPT_CONFIG_TEMPLATE_FILE))
+with open(JAVASCRIPT_CONFIG_TEMPLATE_FILE, 'r') as f:
     config = f.read()
 
 config = config.replace('<%address_placeholder%>', json.dumps(data['networks']['3']['address']))
 config = config.replace('<%abi_placeholder%>', json.dumps(data['abi']))
-    
+
+print("Writing config file: {}" .format(JAVASCRIPT_CONFIG_FILE))
 with open(JAVASCRIPT_CONFIG_FILE, "w") as f:
     f.write(config)
     
