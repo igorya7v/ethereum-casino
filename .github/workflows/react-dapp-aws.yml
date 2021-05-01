@@ -32,5 +32,6 @@ jobs:
         abi="`jq '.abi' ./backend/Casino.json`"
         echo $address
         sed -i 's,<%address_placeholder%>,'$address',g' ./frontend/src/js/config.js
+        sed -i 's,<%abi_placeholder%>,'$abi',g' ./frontend/src/js/config.js
         cat ./frontend/src/js/config.js
         
