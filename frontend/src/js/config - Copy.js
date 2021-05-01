@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = '0x6bE4fB10E4f7dDA882334aB5f0eFbFF335fCea76'
+export const CONTRACT_ADDRESS = '0x247D9ea7cCa40A0A447940A20c0B00F0E36CecDf'
 
 export const ABI = [
    {
@@ -139,31 +139,6 @@ export const ABI = [
    {
       "inputs":[
          {
-            "internalType":"address",
-            "name":"",
-            "type":"address"
-         }
-      ],
-      "name":"_playerInfo",
-      "outputs":[
-         {
-            "internalType":"uint256",
-            "name":"amountBet",
-            "type":"uint256"
-         },
-         {
-            "internalType":"uint8",
-            "name":"selectedNum",
-            "type":"uint8"
-         }
-      ],
-      "stateMutability":"view",
-      "type":"function",
-      "constant":true
-   },
-   {
-      "inputs":[
-         {
             "internalType":"uint256",
             "name":"",
             "type":"uint256"
@@ -249,6 +224,31 @@ export const ABI = [
       ],
       "stateMutability":"nonpayable",
       "type":"function"
+   },
+   {
+      "inputs":[
+         {
+            "internalType":"address",
+            "name":"playerAddress",
+            "type":"address"
+         }
+      ],
+      "name":"getPlayerInfo",
+      "outputs":[
+         {
+            "internalType":"uint256",
+            "name":"",
+            "type":"uint256"
+         },
+         {
+            "internalType":"uint8",
+            "name":"",
+            "type":"uint8"
+         }
+      ],
+      "stateMutability":"view",
+      "type":"function",
+      "constant":true
    },
    {
       "inputs":[
