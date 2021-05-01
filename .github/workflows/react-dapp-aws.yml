@@ -35,8 +35,11 @@ jobs:
   test_json:
     name: Test
     runs-on: ubuntu-latest
+    
     steps:
-    - id: set_var
+    - name: Read from json file
+      id: set_var
+      working-directory: "./.github/workflows/frontend"
       run: |
         content=`cat ./Casino.json`
         # the following lines are only required for multi line json
@@ -45,5 +48,6 @@ jobs:
         content="${content//$'\r'/'%0D'}"
         # end of optional handling for multi line json
         echo "::set-output name=packageJson::$content"
+    
     - run: |
         echo "${{fromJson(steps.set_var.outputs.packageJson).version}}"
