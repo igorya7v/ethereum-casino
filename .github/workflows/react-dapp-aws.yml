@@ -27,7 +27,7 @@ jobs:
         echo "::set-output name=packageJson::$content"
     
     - run: |
-        
+        python
         address="`jq '.networks."3".address' ./backend/Casino.json`"
         abi="`jq '.abi' ./backend/Casino.json`"
         echo $address
