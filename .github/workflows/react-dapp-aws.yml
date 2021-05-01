@@ -27,13 +27,14 @@ jobs:
         echo "::set-output name=packageJson::$content"
     
     - run: |
-        echo "${{fromJson(steps.set_var.outputs.packageJson).networks}}"
+        
         address="`jq '.networks."3".address' ./backend/Casino.json`"
         abi="`jq '.abi' ./backend/Casino.json`"
         echo $address
-        echo "$abi" | tr -d " \t\n\r"
+        abi="echo '$abi' | tr -d ' \t\n\r'"
+        echo abi========>
+        echo $abi
         sed -i 's,<%address_placeholder%>,'"$address"',g' ./frontend/src/js/config.js
-        abi="$(cat abi_file)"
         sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
         cat ./frontend/src/js/config.js
         
