@@ -54,5 +54,8 @@ jobs:
     - run: |
         echo "${{fromJson(steps.set_var.outputs.packageJson).networks}}"
         address="`jq '.networks."3".address' ./backend/Casino.json`"
+        abi="`jq '.abi' ./backend/Casino.json`"
         echo $address
-        sed
+        sed -i 's/<%address_placeholder%>/$address/g' ./frontend/src/js/config.js
+        sed -i 's/<%abi_placeholder%>/$abi/g' ./frontend/src/js/config.js
+        
