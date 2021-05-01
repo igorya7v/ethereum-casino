@@ -60,6 +60,9 @@ jobs:
         INFURA_KEY: ${{ secrets.INFURA_KEY }}
       run: npm run deploy
       
+    - name: Output smart contract artifacts
+      run: cat ./backend/build/contracts/Casino.json
+      
     - name: Upload smart contract artifacts
       uses: actions/upload-artifact@v2
       with:
