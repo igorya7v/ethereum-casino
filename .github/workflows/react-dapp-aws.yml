@@ -32,9 +32,9 @@ jobs:
         abi="`jq '.abi' ./backend/Casino.json`"
         echo $address
         echo "$abi" >abi_file
-        sed -i 's,<%address_placeholder%>,'"$address"',g' ./frontend/src/js/config.js
-        sed ':a;N;$!ba;s/\n/ /g' abi_file
-        abi=cat abi_file
-        sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
-        cat ./frontend/src/js/config.js
+#        sed -i 's,<%address_placeholder%>,'"$address"',g' ./frontend/src/js/config.js
+#        sed ':a;N;$!ba;s/\n/ /g' abi_file
+#        abi=cat abi_file
+#        sed -i "s|<%abi_placeholder%>|$abi|g" ./frontend/src/js/config.js
+#        cat ./frontend/src/js/config.js
         
