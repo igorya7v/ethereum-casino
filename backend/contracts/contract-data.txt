@@ -2,6 +2,7 @@ Casino address on Ropstain
 0xDeC6c98fb6Ab74872cd05f0Ecdf45730a37e9527
 0x6bE4fB10E4f7dDA882334aB5f0eFbFF335fCea76
 
+
 owner: 0x3DfB22CF64763f8579eF89b54fb25c7d62aeE05e
 
 
@@ -39,7 +40,7 @@ aws ec2 authorize-security-group-ingress --group-id sg-0dafe9b41b28f1bf5 --proto
 aws ecs create-service --region us-east-1 --service-name eth-dapp-service --task-definition EthereumDappTask --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-a06c17ed], securityGroups=[sg-0dafe9b41b28f1bf5],assignPublicIp=ENABLED}" --cluster eth-dapp-fargate
 
 
-0xe2fc53Ab95EbEd01df69ad19AE9f1A96b8AE5e2C
+0xE94a50045B7A6f41a1F04ea3cDE761Dd99edFc89
 
 
 aws ecs list-tasks  --cluster eth-dapp-fargate
@@ -51,3 +52,6 @@ aws ecs describe-tasks --task "arn:aws:ecs:us-east-1:665524042598:task/eth-dapp-
 }
 
 aws ec2 describe-network-interfaces --network-interface-ids eni-0078f4c2156c63883
+
+
+aws ecs delete-service --service eth-dapp-service --cluster eth-dapp-fargate --force
