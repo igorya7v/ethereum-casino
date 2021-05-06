@@ -87,7 +87,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: smart-contract-artifact
-        path: ./backend/build/contracts/Casino.json
+        path: ./backend/build/contracts
       
     - name: Inject React/Dapp Config
       run: python inject-script.py
