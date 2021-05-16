@@ -3,9 +3,9 @@
 *A sample project to demonstrate a full stack development and CI/CD of the Ethereum Smart Contracts and Frontend DApp (React).*
 
 ## Components
-  * Backend is implemented as an Ethereum Smart Contract using Solidity, OpenZeppelin and Trufle, please see the backend folder for more details.
-  * Frontend is implemented with the React Framework, Webpack and Web3.js, please see the frontend folder for more details.
-  * Frontend React DApp is containerized and deplpoyed to AWS Elastic Container Service (ECS), for more details see the frontend/Dockerfile and frontend/ecs-task-definition.json files.
+  * Backend is implemented as an Ethereum Smart Contract using Solidity, OpenZeppelin and Trufle (backend folder).
+  * Frontend is implemented with the React Framework, Webpack and Web3.js, (frontend folder).
+  * Frontend React DApp is containerized and deplpoyed to AWS Elastic Container Service (ECS), for more details see the [frontend/Dockerfile](frontend/Dockerfile) and  [frontend/ecs-task-definition.json](frontend/ecs-task-definition.json) files.
   * Frontend transactions signatures are done using the MetaMask Plugin.
   * CI/CD is implemented by utilizing the Gihub Actions, please see the .github/workflows/ethereum-dapp-pipeline.yml for more details.
   * Helper Utility CI/CD script is written in Python, please see the inject-script.py for more details.
