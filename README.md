@@ -6,7 +6,7 @@
   * Backend is implemented as an Ethereum Smart Contract, please see the backend folder for more details.
   * Frontend is implemented with the React Framework, Webpack and Web3.js, please see the frontend folder for more details.
   * Frontend React DApp is containerized and deplpoyed to AWS Elastic Container Service (ECS), for more details see the frontend/Dockerfile and frontend/ecs-task-definition.json files.
-  * Frontend transactions signatures are done using the Metamask Plugin.
+  * Frontend transactions signatures are done using the MetaMask Plugin.
   * CI/CD is implemented by utilizing the Gihub Actions, please see the .github/workflows/ethereum-dapp-pipeline.yml for more details.
   * Helper Utility CI/CD script is written in Python, please see the inject-script.py for more details.
 
