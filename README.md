@@ -50,5 +50,96 @@ The CI/CD pipeline is implemented with the Github Actions and contains two main 
   * Login to AWS Container Registry (ECR) using the credentials defined in Github Secrets
   * Deploy the DApp image into the AWS Container Service (ECR)
 
-### AWS Container Service
+### AWS Container Service Setup
 
+#### Create the ECR repository
+```
+aws ecr create-repository --repository-name igorya5v/react-dapp --region us-east-1
+```
+Ensure that you have an ecsTaskExecutionRole IAM role in your account. You can follow the [Amazon ECS Task Execution IAM Role guide](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html) to create the role.
+
+##### Register a task definition
+
+```
+aws ecs register-task-definition --region us-east-1 --cli-input-json file://frontend/ecs-task-definition.json
+```
+
+##### Create an ECS cluster
+
+Create the ECS cluster in the default VPC with this command:
+
+```
+aws ecs create-cluster --region us-east-1 --cluster-name eth-dapp-fargate
+```
+
+##### Create a security group
+
+For the Fargate service we need a security group.
+
+```
+aws ec2 create-security-group --group-name et-dapp-sg --description "Group for Ethereum Dapp ECS Cluster"
+{
+    "GroupId": "sg-0dafe9b41b28f1bf5"
+}
+```
+
+For our application we have to open port 80. Use the security GroupId returned from the previous command.
+
+```
+aws ec2 authorize-security-group-ingress --group-id sg-0dafe9b41b28f1bf5 --protocol tcp --port 80 --cidr 0.0.0.0/0
+```
+
+##### Create the Fargate service
+
+This command creates a Fargate service using the task definition which we registered before. Use the security GroupId from above. Also use your subnet id’s from your default VPC in the command below.
+
+```
+aws ecs create-service --region us-east-1 --service-name eth-dapp-service --task-definition EthereumDappTask --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-a06c17ed], securityGroups=[sg-0dafe9b41b28f1bf5],assignPublicIp=ENABLED}" --cluster eth-dapp-fargate
+```
+
+### Accessing the Deployed DApp after the successful deployment into the AWS Container Service
+
+We need to get the public IP adress. First list the tasks in the fargate cluster:
+
+```
+aws ecs list-tasks  --cluster eth-dapp-fargate
+```
+
+Next get information about the running task:
+
+```
+aws ecs describe-tasks --task "arn:aws:ecs:us-east-1:665524042598:task/eth-dapp-fargate/3616c8cdb43f4015b912478a151762a0" --cluster eth-dapp-fargate
+```
+
+In the output of the above command you will find the “networkInterfaceId”.
+
+```
+{
+    "name": "networkInterfaceId",
+    "value": "eni-0078f4c2156c63883"
+}
+```
+
+With the above networkInterfaceId you can find the public IP:
+
+```
+aws ec2 describe-network-interfaces --network-interface-ids eni-0078f4c2156c63883
+```
+
+In the output of the above command you will find the public IP adress:
+```
+"PublicDnsName": "ec2-34-247-74-194.us-east-1.compute.amazonaws.com",
+"PublicIp": "34.247.74.194"
+```
+
+Now we can test the Ethereum/React DApp with a web browser of your choice.
+
+##### Cleaning Up
+The AWS resources are not free. To clean them up, run the following:
+
+```
+aws ecs delete-service --service eth-dapp-service --cluster eth-dapp-fargate --force
+```
+
+## TODO
+Define infrustructure as a code for the AWS Container Service using tools like AWS Cloud Formation, Teraform, etc.
