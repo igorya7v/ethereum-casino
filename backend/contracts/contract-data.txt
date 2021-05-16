@@ -45,7 +45,7 @@ aws ecs create-service --region us-east-1 --service-name eth-dapp-service --task
 
 aws ecs list-tasks  --cluster eth-dapp-fargate
 
-aws ecs describe-tasks --task "arn:aws:ecs:us-east-1:665524042598:task/eth-dapp-fargate/0399a1b3b950437fb23eaf23d790c496" --cluster eth-dapp-fargate
+aws ecs describe-tasks --task "arn:aws:ecs:us-east-1:665524042598:task/eth-dapp-fargate/3616c8cdb43f4015b912478a151762a0" --cluster eth-dapp-fargate
 {
     "name": "networkInterfaceId",
     "value": "eni-0078f4c2156c63883"
