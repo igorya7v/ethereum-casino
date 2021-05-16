@@ -31,7 +31,7 @@ Frontend Dapp is implemented with the React Framefork, Webpack and Web3.js.
 ### CI/CD Pipelines
 The CI/CD pipeline is implemented with the Github Actions and contains two main Jobs.
 
-# Job #1 - Deploy Casino Smart Contract into the Ethereum Testnet (Ropsten)
+### Job #1 - Deploy Casino Smart Contract into the Ethereum Testnet (Ropsten)
   * Checkout the code
   * Install Truffle Framework
   * Compile the Casino Smart Contract
@@ -39,7 +39,7 @@ The CI/CD pipeline is implemented with the Github Actions and contains two main 
   * Deploy into the Ethereum Testnet (Ropsten) using the Credentials from the Github Secrets (backend/truffle-config.js)
   * *Pass the generated Casino.json file as an artifact to the Job #2*
 
-# Job #2 - Deploy React Dapp into the AWS Contrainer Service (ECR)
+### Job #2 - Deploy React Dapp into the AWS Contrainer Service (ECR)
   * Depends on Job #1 to complete
   * Checkout the code
   * Fetch the Casino.json file as an artifact from Job #1 (this file contains the ABI and Ethereum Address of the deployed Smart Contract in Job #1)
